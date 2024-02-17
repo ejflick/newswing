@@ -1,29 +1,33 @@
 package fl.newswing;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class App {
+public class Application {
 
   private final String title;
-  private final Router router;
+  private final Widget widget;
 
-  public App(String title, Router router) {
+  public Application(String title, Widget widget) {
+    // The following line reduces lag on Ubuntu.
     System.setProperty("sun.java2d.opengl", "True");
+
     this.title = title;
-    this.router = router;
+    this.widget = widget;
   }
 
   public void run() {
     SwingUtilities.invokeLater(() -> {
       final var frame = new JFrame(title);
-
+      final var contentPane = new JPanel();
       frame.setSize(800, 600);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setLocationRelativeTo(null);
-      frame.setVisible(true);
 
-      router.goToIndex(frame);
+      widget.render(contentPane);
+      frame.setContentPane(contentPane);
+      frame.setVisible(true);
     });
   }
 

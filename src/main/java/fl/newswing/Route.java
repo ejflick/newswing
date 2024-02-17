@@ -1,20 +1,28 @@
 package fl.newswing;
 
-public class Route {
+import javax.swing.JComponent;
 
-  private final String route;
+public class Route extends Widget {
+
+  private final String path;
   private final Widget topLevelWidget;
 
-  public Route(String route, Widget topLevelWidget) {
-    this.route = route;
+  public Route(String path, Widget topLevelWidget) {
+    this.path = path;
     this.topLevelWidget = topLevelWidget;
   }
 
-  public String route() {
-    return route;
+  public String path() {
+    return path;
   }
 
-  public Widget topLevelWidget() {
-    return topLevelWidget;
+  @Override
+  public void render(JComponent container) {
+    topLevelWidget.render(container);
+  }
+
+  @Override
+  public void destroy() {
+    this.children.forEach(Renderable::destroy);
   }
 }

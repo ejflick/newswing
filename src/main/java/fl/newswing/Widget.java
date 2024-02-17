@@ -1,11 +1,17 @@
 package fl.newswing;
 
-import java.awt.Container;
+import java.util.List;
 
-public interface Widget {
+public abstract class Widget implements Renderable {
 
-  void render(Container container);
+  protected List<Widget> children;
 
-  void destroy();
+  public Widget() {
+    this.children = List.of();
+  }
 
+  @Override
+  public void destroy() {
+    this.children.forEach(Widget::destroy);
+  }
 }

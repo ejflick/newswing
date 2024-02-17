@@ -1,58 +1,75 @@
 package fl.newswing;
 
-import java.awt.Container;
 import java.util.Arrays;
+import java.util.List;
+import javax.swing.JComponent;
 
-public class Router {
+public class Router extends Widget {
 
-  private final String index;
+  private final String indexPath;
 
-  private final Route[] routes;
+  private final List<Route> routes;
+  private JComponent container;
+  private boolean firstTimeRendered = true;
+  private Route current;
 
   /**
    * Routing mechanism for the application.
    *
-   * @param index The default route to navigate to when the application loads.
+   * @param indexPath The default route to navigate to when the application loads.
    * @param routes The routes in your application.
    */
-  public Router(String index, Route ... routes) {
-    this.index = index;
-    this.routes = routes;
+  public Router(String indexPath, Route ... routes) {
+    this.indexPath = indexPath;
+    this.routes = Arrays.asList(routes);
   }
 
   /**
-   * Get a {@link Navigator} to navigate to different routes in the application.
+   * Routing mechanism for the application.
+   *
+   * @param indexPath The default route to navigate to when the application loads.
+   * @param routes The routes in your application.
    */
-  public Navigator navigator() {
-    return new Navigator();
+  public Router(String indexPath, Navigation navigation, Route ... routes) {
+    this.indexPath = indexPath;
+    this.routes = Arrays.asList(routes);
+
+    navigation.listen(this::setCurrent);
   }
 
-  void goToIndex(Container container) {
-    indexComponent(container);
-  }
-
-  private void indexComponent(Container container) {
-    Arrays.asList(routes)
-        .stream()
-        .filter(route -> route.route().equals(index))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("Can not route to index: " + index))
-        .topLevelWidget()
-        .render(container);
+  void goToIndex() {
+    setCurrent(indexPath);
   }
 
   void setCurrent(String path) {
+    Route rootRoute = routes.stream()
+        .filter(route -> route.path().equals(path))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Can not route to path: " + indexPath));
 
+    // The following call invalidates component hierarchy...hence the call to validate below.
+    container.removeAll();
+    rootRoute.render(this.container);
+    container.repaint();
+    container.validate();
+
+    current = rootRoute;
   }
 
-  public class Navigator {
-    private Navigator() {
-
+  @Override
+  public void render(JComponent container) {
+    if (!firstTimeRendered) {
+      current.render(container);
+      return;
     }
 
-    void goTo(String path) {
-      setCurrent(path);
-    }
+    firstTimeRendered = false;
+    this.container = container;
+    goToIndex();
   }
 
+  @Override
+  public void destroy() {
+    routes.forEach(Route::destroy);
+  }
 }

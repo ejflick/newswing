@@ -1,29 +1,27 @@
 package fl.newswing;
 
-import java.awt.Container;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
+import javax.swing.JComponent;
 
-public class Button implements Widget {
+public class Button extends Widget {
 
   private final String buttonText;
-  private final ActionListener actionListener;
+  private final EventCallable actionCallable;
 
   public Button(String buttonText) {
     this.buttonText = buttonText;
-    this.actionListener = new NoopActionListener();
+    this.actionCallable = new NoopEventCallable();
   }
 
-  public Button(String buttonText, ActionListener actionListener) {
+  public Button(String buttonText, EventCallable actionCallable) {
     this.buttonText = buttonText;
-    this.actionListener = actionListener;
+    this.actionCallable = actionCallable;
   }
 
   @Override
-  public void render(Container container) {
+  public void render(JComponent container) {
     final var button = new JButton(this.buttonText);
-    button.addActionListener(this.actionListener);
+    button.addActionListener((actionEvent) -> actionCallable.onEvent());
 
     container.add(button);
   }
