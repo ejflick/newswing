@@ -1,4 +1,4 @@
-# Declarative Swing
+![](newswing.svg)
 
 This is an experimental wrapper around Swing that provides declarative GUI building. This library is inspired heavily by Flutter.
 
