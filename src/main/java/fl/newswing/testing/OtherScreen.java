@@ -1,7 +1,7 @@
 package fl.newswing.testing;
 
-import fl.newswing.Route;
-import fl.newswing.Text;
+import fl.newswing.widgets.routing.Route;
+import fl.newswing.widgets.Text;
 
 public class OtherScreen extends Route {
 

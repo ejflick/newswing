@@ -1,5 +1,6 @@
-package fl.newswing;
+package fl.newswing.widgets;
 
+import fl.newswing.Widget;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;

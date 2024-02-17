@@ -1,7 +1,8 @@
-package fl.newswing;
+package fl.newswing.widgets;
 
 import static java.awt.Font.PLAIN;
 
+import fl.newswing.Widget;
 import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;

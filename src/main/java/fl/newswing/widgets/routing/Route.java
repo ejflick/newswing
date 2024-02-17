@@ -1,5 +1,7 @@
-package fl.newswing;
+package fl.newswing.widgets.routing;
 
+import fl.newswing.Renderable;
+import fl.newswing.Widget;
 import javax.swing.JComponent;
 
 public class Route extends Widget {

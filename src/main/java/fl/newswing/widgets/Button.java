@@ -1,5 +1,8 @@
-package fl.newswing;
+package fl.newswing.widgets;
 
+import fl.newswing.EventCallable;
+import fl.newswing.NoopEventCallable;
+import fl.newswing.Widget;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 

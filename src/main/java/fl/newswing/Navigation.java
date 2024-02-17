@@ -11,12 +11,21 @@ public class Navigation {
     this.listenables.add(subscriber);
   }
 
-  public void goTo(String path) {
-    this.listenables.forEach(listenable -> listenable.navigation(path));
+  public void pop() {
+    this.listenables.forEach(NavigationListenable::pop);
   }
 
-  @FunctionalInterface
+  public void push(String path) {
+    this.listenables.forEach(listenable -> listenable.push(path));
+  }
+
+  public void pushReplacement(String path) {
+    this.listenables.forEach(listenable -> listenable.pushReplacement(path));
+  }
+
   public interface NavigationListenable {
-    void navigation(String path);
+    void pop();
+    void push(String path);
+    void pushReplacement(String path);
   }
 }
