@@ -44,7 +44,7 @@ final var navigation = new Navigation();
 new Router(
   "page1",
   
-  naviagation, // <-- Router listens to navigation
+  naviagation, // <-- Router will react to navigation changes.
 
   new Route(
     "page1",
